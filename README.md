@@ -1,0 +1,1 @@
+# Szkolenie_TechniczneProjekt_Python
