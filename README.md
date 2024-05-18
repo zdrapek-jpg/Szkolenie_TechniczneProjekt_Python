@@ -1,7 +1,7 @@
 # Szkolenie_TechniczneProjekt_Python
 !# Python3
 
-projekt obejmuje  biblioteki tkinter, ttkbootstrap, tesseract,Pillow, cv2,matplotlib
+projekt obejmuje  biblioteki tkinter, ttkbootstrap, tesseract,Pillow, cv2,matplotlib  <br />
 versions:
 AnacodnaNavigator version: 2.4.0   <br />
 Tkinter version: 8.6   <br />
@@ -10,7 +10,7 @@ Pillow version: 9.2.0   <br />
 OpenCV version (cv2): 4.7.0   <br />
 Matplotlib version: 3.7.0   <br />
 TensorFlow version: 2.16.1   <br />
-
+<br />
 główne cele :
 - pokazowe użycie tkintera
 - użycie modelu OCR dla pisma ręcznego
