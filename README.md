@@ -2,7 +2,7 @@
 !# Python3
 
 projekt obejmuje  biblioteki tkinter, ttkbootstrap, tesseract,Pillow, cv2,matplotlib  <br />
-versions:
+versions:  <br />
 AnacodnaNavigator version: 2.4.0   <br />
 Tkinter version: 8.6   <br />
 Tesseract version: 5.3.1.20230401   <br />
