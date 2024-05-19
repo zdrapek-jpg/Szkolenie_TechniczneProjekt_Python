@@ -4,12 +4,13 @@
 projekt obejmuje  biblioteki tkinter, ttkbootstrap, tesseract,Pillow, cv2,matplotlib  <br />
 versions:
 AnacodnaNavigator version: 2.4.0   <br />
+TensorFlow version: 2.16.1   <br />
 Tkinter version: 8.6   <br />
 Tesseract version: 5.3.1.20230401   <br />
 Pillow version: 9.2.0   <br />
 OpenCV version (cv2): 4.7.0   <br />
 Matplotlib version: 3.7.0   <br />
-TensorFlow version: 2.16.1   <br />
+rembg version: 2.0.56  <br />
 <br />
 główne cele :
 - pokazowe użycie tkintera
