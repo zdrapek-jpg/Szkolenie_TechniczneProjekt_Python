@@ -22,7 +22,14 @@ główne cele :
 - funkcje compile eval i exec w połączenie z matplotlib rysowanie wykresu i wyszukiwaniem miejsc zerowych 
 - wysyłanie skopiowanego wcześniej wyniku ocr z pytesseract  jako wiadomość email ze schowka za pomocą pyperclip
 - obsługa wyjątków użycia bibliotek, wczytywania obrazów i walidacji 
-- tesseract dla odczytywania paragonów podział na   
+- tesseract dla odczytywania paragonów podział na   szczegułowe informacje z prostych paragonów
+
+
+
+ 
+  ##nad projektem pracowali
+  +Paweł Skrok
+  +Karolina Rydzik 
 
 
 
