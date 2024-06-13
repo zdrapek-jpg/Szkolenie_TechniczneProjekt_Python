@@ -27,8 +27,8 @@ główne cele :
 
 
 ## Twórcy Projektu:
-  +Paweł Skrok
-  +Karolina Rydzik 
+  -Paweł Skrok <br />
+  -Karolina Rydzik 
 
 
 
