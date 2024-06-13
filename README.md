@@ -26,8 +26,7 @@ główne cele :
 
 
 
- 
-  ##nad projektem pracowali
+## Twórcy Projektu:
   +Paweł Skrok
   +Karolina Rydzik 
 
