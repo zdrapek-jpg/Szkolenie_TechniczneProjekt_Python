@@ -1,0 +1,7 @@
+{
+    "sender_email": "sender",
+    "password": "passwrod",
+    "receiver_email": "target",
+    "smtp_server": "smtp.gmail.com",
+    "port": 465
+}

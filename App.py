@@ -3,6 +3,8 @@ from tkinter import ttk
 import sys
 import  ttkbootstrap as ttk
 
+
+
 from Menu import Menu
 window  = ttk.Window(themename="darkly")
 window.title("Szkolenie Techniczne")
