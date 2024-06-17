@@ -6,6 +6,7 @@ import  ttkbootstrap as ttk
 
 
 from Menu import Menu
+# all windows inherit after this theme
 window  = ttk.Window(themename="darkly")
 window.title("Szkolenie Techniczne")
 window.geometry("650x560")

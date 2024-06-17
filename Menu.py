@@ -6,13 +6,13 @@ import tkinter as tk
 import pyperclip
 from email.message import EmailMessage
 from tkinter import ttk, messagebox
+from image_tk import ImageEditor
 
 import numpy as np
 import ttkbootstrap as ttk
 
 from Preprocess_Class import Preprocessing, OCR_tesseract, OCR_Window
 from sympy import symbols, solve, sympify
-import time
 
 
 
@@ -30,7 +30,7 @@ class Menu(ttk.Frame):
         ttk.Button(new_row2, text="Draw",command=self.open_Drawing_window).pack(side='left')
         new_row2.pack(pady=10)
         new_row3 = ttk.Frame(self)
-        ttk.Button(new_row3, text="Algorithms",command=self.open_Alogrithms_window).pack(side='left',padx=10)
+        ttk.Button(new_row3, text="Image transformation",command=self.open_Image_window).pack(side='left',padx=10)
         ttk.Button(new_row3, text="Mail Sender",command=self.open_MailSender_window).pack(side='left')
         new_row3.pack(pady=10)
         self.config(width=230, height=170, padding=20)
@@ -44,88 +44,14 @@ class Menu(ttk.Frame):
     def open_Preprocessing_window(self):
         second_window = Preprocessing(self,"Preprocessing window", "preprocess")
         # not done
-    def open_Alogrithms_window(self):
-        secondview = Algorithms(self)
+    def open_Image_window(self):
+        second_view = ImageEditor(self,"Image Editor")
         # done
     def open_MailSender_window(self):
         secondview= Mail_sender(self)
         #not done
     def open_Drawing_window(self):
         secondview = Draw(self)
-
-
-class Algorithms(tk.Toplevel):
-    def __init__(self, parent):
-        super().__init__(parent)
-        self.title("Algorithms")
-        self.geometry("350x450")
-        self.minsize(230, 340)
-        ttk.Label(self, text="past data", background='gray19').pack()
-        ttk.Entry(self).pack(pady=15)
-        ttk.Label(self, text="czas", background='gray19').pack()
-        ttk.Label(self, text="złożoność", background='gray19').pack(pady=15)
-        ttk.Button(self, text="Exit", command=self.destroy).pack(side='bottom', pady=20)
-        self.config(background='gray16')
-
-        def bubble_sort(self,data):
-            start = time.time()
-            n = len(data)
-            for i in range(n):
-                for j in range(0, n - i - 1):
-                    if data[j] > data[j + 1]:
-                        data[j], data[j + 1] = data[j + 1], data[j]
-            end = time.time()
-            return data,(end-start)
-
-        def merge_sort(arr):
-            start =time.time()
-            if len(arr) <= 1:
-                return arr
-
-            mid = len(arr) // 2
-            left_half = arr[:mid]
-            right_half = arr[mid:]
-
-            left_half = merge_sort(left_half)
-            right_half = merge_sort(right_half)
-            sorted_arr = merge(left_half, right_half)
-            end = time.time()
-            return sorted_arr, end - start
-
-        def merge(self, left, right):
-            result = []
-            left_idx, right_idx = 0, 0
-
-            while left_idx < len(left) and right_idx < len(right):
-                if left[left_idx] < right[right_idx]:
-                    result.append(left[left_idx])
-                    left_idx += 1
-                else:
-                    result.append(right[right_idx])
-                    right_idx += 1
-
-            result.extend(left[left_idx:])
-            result.extend(right[right_idx:])
-            end = time.time()
-            return result
-        def quick_sort(self,arr):
-            start =time.time()
-
-            if len(arr) <= 1:
-                return arr
-
-            pivot = arr[len(arr) // 2]
-            left = [x for x in arr if x < pivot]
-            middle = [x for x in arr if x == pivot]
-            right = [x for x in arr if x > pivot]
-
-            sorted_arr = left + middle + right
-            end = time.time()
-            return sorted_arr, end- start
-
-        def algorithms(self):
-            pass
-
 
 
 
@@ -308,11 +234,15 @@ class Mail_sender(tk.Toplevel):
                 em['From'] = self.Frame1.enter_mail.get()
                 em['To'] = self.Frame2.enter_mail.get()
                 # do sprawdzenia co pobiera
-                em['Subject'] = self.title_email.get()
-                if self.title_email.get() ==None or self.title_email.get() =="":
-                    em['Subject'] = pyperclip.copy()
-                em.set_content(self.message_body.get())
-                print(self.Frame1.enter_mail.get()+"\n"+self.Frame2.enter_mail.get()+"\n"+self.title_email.get()+"\n"+self.message_body.get())
+                try:
+                    em['Subject'] = self.title_email.get()
+                    if self.title_email.get() ==None or self.title_email.get() =="":
+                        em['Subject'] = pyperclip.copy()
+                    em.set_content(self.message_body.get())
+                    print(self.Frame1.enter_mail.get()+"\n"+self.Frame2.enter_mail.get()+"\n"+self.title_email.get()+"\n"+self.message_body.get())
+                except Exception as e:
+                    print(e)
+
                 context = ssl.create_default_context()
                 # poczta emeil musi być otwarta na aplikacje i posiadać toked ktory należy uzupełnić,to nie hasło do poczty
                 with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:

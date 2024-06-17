@@ -49,9 +49,9 @@ class OCR_tesseract(tk.Toplevel):
             errors.config(text=f"An unexpected error occurred: {e}",background="red")
             print(f"An unexpected error occurred: {e}")
         return None
-    @classmethod
-    def cv2And_pytesseract_preprocessing(self,into):
-        #into = self.processImage(self.input_label,self.errors)
+
+    def cv2And_pytesseract_preprocessing(self):
+        into = self.processImage(self.input_label,self.errors)
         if into==None:
             return
         try:
@@ -59,9 +59,9 @@ class OCR_tesseract(tk.Toplevel):
             orig = cv2.imread(into)
             image = orig.copy()
 
-            #self.errors.config(text="Image loaded successfully", background="green")
+            self.errors.config(text="Image loaded successfully", background="green")
         except:
-            #self.errors.config(text="error with processing, cv2", background="red")
+            self.errors.config(text="error with processing, cv2", background="red")
             return None
         image = imutils.resize(image, width=500)
         ratio = orig.shape[1] / float(image.shape[1])
@@ -92,9 +92,9 @@ class OCR_tesseract(tk.Toplevel):
         # if the receipt contour is empty then our script could not find the
         # outline and we should be notified
         if receiptCnt is None:
-            #self.errors.configure(
-             #   text="Could not find receipt outline.Try debugging your edge detection and contour steps.",
-             #   background="red")
+            self.errors.configure(
+                text="Could not find receipt outline.Try debugging your edge detection and contour steps.",
+                background="red")
             raise Exception(("Could not find receipt outline. "
                             "Try debugging your edge detection and contour steps."))
             # check to see if we should draw the contour of the receipt on the
@@ -107,18 +107,18 @@ class OCR_tesseract(tk.Toplevel):
             text = pytesseract.image_to_string(
                 cv2.cvtColor(output, cv2.COLOR_BGR2RGB),
                 config=options)
-            #self.input_label.config(text=str(text))
+            self.input_label.config(text=str(text))
 
         except:
-            #self.errors.config(text= "tesseract in not found or wrong configured",background="red")
+            self.errors.config(text= "tesseract in not found or wrong configured",background="red")
             pass
 
         print(text)
         if len(text)<2:
-            #self.errors.config(text="there in no data that war read from image ",background="red")
+            self.errors.config(text="there in no data that war read from image ",background="red")
             return
         pyperclip.copy(text)
-        return text
+
 
 
 class OCR_Window(tk.Toplevel):
@@ -173,7 +173,7 @@ class OCR_Window(tk.Toplevel):
             if (w >= 10 and w <= 150) and (h >= 30 and h <= 120) or (w >= 8 and w <= 150) and (h >= 35 and h <= 120):
                 # extract the character and threshold it to make the character
                 # appear as *white* (foreground) on a *black* background, then
-                # grab the width and height of the thresholded image
+                #  width and height of the thresholded image
                 roi = gray[y:y + h, x:x + w]
                 thresh = cv2.threshold(roi, 0, 255,
                                        cv2.THRESH_BINARY_INV | cv2.THRESH_OTSU)[1]
@@ -218,9 +218,10 @@ class OCR_Window(tk.Toplevel):
             cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
             cv2.putText(image, label, (x - 10, y - 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 1.2, (0, 255, 0), 2)
-        # show the image
+        # show image
         try:
             cv2.imshow("Image", image)
+            cv2.imwrite("Output_Images/boxes.png",image )
             cv2.waitKey(0)
             self.model.config(text ="Model loaded successfully",background='green')
             self.errors.config(text="no errors")
@@ -254,9 +255,10 @@ class SecondView(tk.Toplevel):
             return None
 
         try:
+            #verify the image
             img = Image.open(into)
-            img.verify()  # Verify that it is an image
-            img = cv2.imread(into)  # Read the image using OpenCV
+            img.verify()
+            img = cv2.imread(into)
             self.errors.config(text="Image loaded successfully")
             return img
         except UnidentifiedImageError:
@@ -272,9 +274,10 @@ class Preprocessing(SecondView):
         super().__init__(parent, welcome, type)
         self.Menu_Frame = ttk.Frame(self, padding=10)
         self.minsize(300, 460)
-
+        #grid configuration
         self.Menu_Frame.columnconfigure((0, 1), pad=10, uniform='a', weight=1)
         self.Menu_Frame.rowconfigure((0, 1, 2), uniform='a', weight=1, pad=5)
+
         ttk.Button(self.Menu_Frame, text="Threshold", width=12,
                    command=lambda: self.show_write_Processing("threshold")).grid(row=0, column=0)
         ttk.Button(self.Menu_Frame, text="No noise", width=12,
@@ -300,7 +303,7 @@ class Preprocessing(SecondView):
             _, im_bw = cv2.threshold(gray_image, 140, 255, cv2.THRESH_BINARY)
             cv2.imwrite(f"Output_Images/{text}bw_image.png", im_bw)
             cv2.imshow("Threshold Image", im_bw)  # Show image
-            cv2.waitKey(0)  # Wait for a key press to close the window
+            cv2.waitKey(0)
 
         elif function == "no_noise":
             print("No noise")
@@ -351,7 +354,7 @@ class Preprocessing(SecondView):
             blur_value = 7
             line_size = 11
 
-            # Assuming 'image' is already defined
+
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             gray_blur = cv2.medianBlur(gray, blur_value)
             edges = cv2.adaptiveThreshold(gray_blur, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, line_size,
@@ -367,23 +370,18 @@ class Preprocessing(SecondView):
             result = center[label.flatten()]
             img = result.reshape(image.shape)
 
-            # Correct bilateralFilter call
+            # correct bilateralFilter call
             blurred = cv2.bilateralFilter(img, 7, 200, 200)
 
             cartoon = cv2.bitwise_and(blurred, blurred, mask=edges)
 
-            # Save cartoon image
+            # savee cartoon image
             cv2.imwrite(f"Output_Images/{text}animated_image.png", cartoon)
 
-            # Display cartoon image
+            # display cartoon image
             cv2.imshow("Cartoon look like image", cartoon)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
         else:
             self.errors.config(text="Unknown processing function", background="red")
-
-# Example usage:
-# root = tk.Tk()
-# app = Preprocessing(root, "Welcome", "your_type")
-# root.mainloop()
 
