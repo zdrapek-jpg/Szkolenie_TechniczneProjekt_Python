@@ -87,6 +87,9 @@ class Bill_recognization:
                     if len(outside[i][j+1:])<=1:
                         real_items.append(outside[i+1])
                         outside[i+1]=""
+                    for x_indexing in range(len(outside[i][j:])):
+                        real_items.append(outside[i][j+x_indexing])
+                        outside[i][j+x_indexing]= ""
 
                 elif i ==0 and  line !="":
                     if re.search(r'\d{2}-\d{3}\s+[A-Za-z]+', line):
@@ -99,12 +102,20 @@ class Bill_recognization:
                     continue
 
                 #regex to find for example 4,55 A  | 123.00 B
-                elif re.search(r'\d+[.,:]\d{0,2}\s?|\.?[A-Z]?', line):
+                elif re.search(r'\d+[.,:]\d{0,2}\s?|\.?[A-Z]?', line) and line!="":
                     products.append(line)
                     print(f"item:    {line:-^30}")
         # lines after cosinus similarity
-        for it in real_items[0]:
-            print(f"real_item:  {it:#^30}")
+        try:
+            if len(real_items)<=1:
+                for it in real_items[0]:
+                    print(f"real_item:  {it:#^30}")
+            else:
+                for it in real_items:
+                    print(f"real_item:  {it:#^30}")
 
-print(Bill_recognization.Bill_regex())
+        except:
+            print("not found items")
+
+print(Bill_recognization.Bill_regex("jej"))
 

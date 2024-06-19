@@ -13,6 +13,7 @@ import numpy as np
 import pyperclip
 from imutils.contours import sort_contours
 from  keras.models import load_model
+from Paragon_preprocessing import Bill_recognization
 class OCR_tesseract(tk.Toplevel):
     def __init__(self,parent,welcome,type):
         super().__init__(parent)
@@ -117,7 +118,10 @@ class OCR_tesseract(tk.Toplevel):
         if len(text)<2:
             self.errors.config(text="there in no data that war read from image ",background="red")
             return
-        pyperclip.copy(text)
+
+        formated_text_from_bill = Bill_recognization.Bill_regex(text)
+        pyperclip.copy(formated_text_from_bill)
+
 
 
 
@@ -296,6 +300,7 @@ class Preprocessing(SecondView):
         if image is None:
             return
         text =self.input_label.get().split('.')[0]
+        text = text.split("/")[-1]
 
         if function == "threshold":
             print("Threshold")
@@ -327,11 +332,12 @@ class Preprocessing(SecondView):
 
 
         elif function == "remove_background":
-            print("Remove background")
             try:
                 output = remove(image)
                 output = np.array(output)
-                cv2.imwrite(f"Output_Images/{text}removed_bg.png", output)
+                output_path = f"Output_Images/{text}removed_bg.png"
+                cv2.imwrite(output_path, output)
+                print(f"Background removed image saved at: {output_path}")
                 cv2.imshow("Removed Background", output)
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
