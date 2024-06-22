@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
 import cv2
-import keras
-import sympy
 from rembg import remove
 import ttkbootstrap as ttk
 from PIL import Image, UnidentifiedImageError
@@ -116,11 +114,12 @@ class OCR_tesseract(tk.Toplevel):
 
         print(text)
         if len(text)<2:
-            self.errors.config(text="there in no data that war read from image ",background="red")
+            self.errors.config(text="text read from image is empty ",background="red")
             return
-
+        to_add =""
         formated_text_from_bill = Bill_recognization.Bill_regex(text)
-        pyperclip.copy(formated_text_from_bill)
+
+        pyperclip.copy(text)
 
 
 
@@ -306,9 +305,10 @@ class Preprocessing(SecondView):
             print("Threshold")
             gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             _, im_bw = cv2.threshold(gray_image, 140, 255, cv2.THRESH_BINARY)
-            cv2.imwrite(f"Output_Images/{text}bw_image.png", im_bw)
+            cv2.imwrite(f"Output_Images/{text}threshold_image.png", im_bw)
             cv2.imshow("Threshold Image", im_bw)  # Show image
             cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
         elif function == "no_noise":
             print("No noise")
@@ -320,6 +320,7 @@ class Preprocessing(SecondView):
             cv2.imwrite(f"Output_Images/{text}no_noise.png", image)
             cv2.imshow("No Noise Image", image)
             cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
 
         elif function == "dilated":
@@ -329,6 +330,7 @@ class Preprocessing(SecondView):
             cv2.imwrite(f"Output_Images/{text}dilated_image.png", dilated_image)
             cv2.imshow("Dilated Image", dilated_image)
             cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
 
         elif function == "remove_background":
@@ -352,6 +354,7 @@ class Preprocessing(SecondView):
             cv2.imwrite(f"Output_Images/{text}eroded_image.png", eroded_image)
             cv2.imshow("Eroded Image", eroded_image)
             cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
 
         elif function == "animated":

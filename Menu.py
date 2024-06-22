@@ -1,4 +1,3 @@
-import json
 import re
 import smtplib
 import ssl
@@ -7,6 +6,7 @@ import pyperclip
 from email.message import EmailMessage
 from tkinter import ttk, messagebox
 from image_tk import ImageEditor
+import logging
 
 import numpy as np
 import ttkbootstrap as ttk
@@ -193,34 +193,36 @@ class Mail_sender(tk.Toplevel):
         self.Frame2 = Frame(self,"target mail","check mail")
         self.Frame2.pack()
         ttk.Label(self,text="title").pack(pady=15)
-        self.title_email = ttk.Entry(self ).pack()
+        self.title_email = ttk.Entry(self)
+        self.title_email.pack()
         ttk.Label(self,text="message").pack(pady=15)
-        self.message_body = ttk.Entry(self).pack()
+        self.message_body = ttk.Entry(self)
+        self.message_body.pack()
         ttk.Label(self, text="special_password").pack(pady=15)
 
-        self.password  =ttk.Entry(self)
+        self.password  =ttk.Entry(self,text="Not used")
         self.password.pack()
         ttk.Button(self,text="Send",command= self.mail_sender).pack(pady=15)
         ttk.Button(self,text='Exit',command=self.destroy).pack(side='right',padx=25)
     def mail_sender(self):
-        try:
-            with open("Email_config/email.json", "r") as email_file:
-                mail_holder = json.load(email_file)
-        except Exception as e:
-            self.Frame1.set_error_message("configuration", f"Error reading configuration file: {e}")
-            return
+        # try:
+        #     with open("Email_config/email.json", "r") as email_file:
+        #         mail_holder = json.load(email_file)
+        # except Exception as e:
+        #     self.Frame1.set_error_message("configuration", f"Error reading configuration file: {e}")
+        #     return
 
         try:
             first =self.Frame1.check_mail()
             if first:
                 self.Frame1.correct_label.config(text="Correct format", background="green")
-                flag = True
+                second = True
             else:
                 self.Frame1.correct_label.config(text="wrong format", background="red")
             second = self.Frame2.check_mail()
             if second:
                 self.Frame2.correct_label.config(text="Correct format", background="green")
-                flag2 = True
+                first = True
             else:
                 self.Frame2.correct_label.config(text="wrong format", background="red")
 
@@ -229,35 +231,37 @@ class Mail_sender(tk.Toplevel):
             self.Frame1.set_error_message("niepowodzenie przy wczytaniu",e)
             return
         try:
-            if first and second :
+            if first and second:
                 em = EmailMessage()
-                em['From'] = self.Frame1.enter_mail.get()
-                em['To'] = self.Frame2.enter_mail.get()
-                # do sprawdzenia co pobiera
-                try:
-                    em['Subject'] = self.title_email.get()
-                    if self.title_email.get() ==None or self.title_email.get() =="":
-                        em['Subject'] = pyperclip.copy()
-                    em.set_content(self.message_body.get())
-                    print(self.Frame1.enter_mail.get()+"\n"+self.Frame2.enter_mail.get()+"\n"+self.title_email.get()+"\n"+self.message_body.get())
-                except Exception as e:
-                    print(e)
+                from_email = self.Frame1.enter_mail.get()
+                to_email = self.Frame2.enter_mail.get()
+                subject = self.title_email.get()
+                content = pyperclip.paste()
 
+                em['From'] = from_email
+                em['To'] = to_email
+                em['Subject'] = subject
+                em.set_content(content)
                 context = ssl.create_default_context()
-                # poczta emeil musi być otwarta na aplikacje i posiadać toked ktory należy uzupełnić,to nie hasło do poczty
+
                 with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
-                    server.login(self.Frame1.enter_mail.get(), self.password.get())
+                    server.login(from_email,  "password")
                     server.send_message(em)
 
+                    logging.info("Message sent successfully")
+                    messagebox.showinfo("Sent", "Message sent successfully")
+
         except AttributeError as e:
-            self.Frame1.set_error_message("Attribute Error", f"function or call   with  {e}")
+            self.Frame1.set_error_message("Attribute Error", f"Function or call with {e}")
+
         except smtplib.SMTPException as e:
             self.Frame1.set_error_message("Error", f"SMTP error occurred: {e}")
-        except NameError:
-            self.Frame1.set_error_message("Error with smtp","Authentication error: check import smtp ")
+
+        except NameError as e:
+            self.Frame1.set_error_message("Error with smtp", "Authentication error: check import smtp")
+
         except Exception as e:
-            print(f"Error sending email not available: {e}")
-            self.Frame1.set_error_message("sending not available",e)
+            self.Frame1.set_error_message("Sending not available", str(e))
 
 
 

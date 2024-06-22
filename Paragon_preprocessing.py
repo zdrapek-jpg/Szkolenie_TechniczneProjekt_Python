@@ -1,4 +1,3 @@
-import pyperclip
 import re
 
 import nltk, string
@@ -80,42 +79,71 @@ class Bill_recognization:
             for j in range(len(outside[i])):
                 line = outside[i][j]
                 #cosinus similarity dla Paragonu
-                if Bill_recognization.check_similarity(line)>0.8:
+                if Bill_recognization.check_similarity(line)>0.7:
                     # next list is empty ald line element is empty
                     line= ""
                     outside[i][j]=""
                     if len(outside[i][j+1:])<=1:
                         real_items.append(outside[i+1])
                         outside[i+1]=""
-                    for x_indexing in range(len(outside[i][j:])):
-                        real_items.append(outside[i][j+x_indexing])
-                        outside[i][j+x_indexing]= ""
+                    else:
+                        for x_indexing in range(len(outside[i][j:])):
+                            real_items.append(outside[i][j+x_indexing])
+
+                            outside[i][j+x_indexing]= ""
 
                 elif i ==0 and  line !="":
                     if re.search(r'\d{2}-\d{3}\s+[A-Za-z]+', line):
-                        poczta.append(line)
+                        poczta.append(str(line))
                         print(f"poczta:   {line:*^30}")
                         continue
                     # list index  0 is always contain information about owner
-                    owner.append(line)
+                    owner.append(str(line))
                     print(f"info:    {line:_^30}")
                     continue
 
                 #regex to find for example 4,55 A  | 123.00 B
                 elif re.search(r'\d+[.,:]\d{0,2}\s?|\.?[A-Z]?', line) and line!="":
-                    products.append(line)
+                    products.append(str(line))
                     print(f"item:    {line:-^30}")
-        # lines after cosinus similarity
         try:
-            if len(real_items)<=1:
+            if len(real_items[0]) >= 1:
                 for it in real_items[0]:
                     print(f"real_item:  {it:#^30}")
-            else:
-                for it in real_items:
-                    print(f"real_item:  {it:#^30}")
-
         except:
             print("not found items")
-
-print(Bill_recognization.Bill_regex("jej"))
-
+        return [owner,
+                products,
+                poczta,
+                real_items[0]]
+#
+# print(Bill_recognization.Bill_regex('''ELWAB SA
+# UL. SMOLEŃSKA 64
+#
+# 80-410 GDAŃSK
+# Tel: 0483414002 Fax: 0483410350
+# NIP. 684-001-04-59
+# dn.14r12.21 wydr.1129
+# PARAGON FISKALNY
+#
+# WODA MINERAL. 1,5L 3*2,00=6,00C
+# PIZZA 1*5,00=5,00A
+# JABŁKA 1,84 * 2,99 = 5,50 B
+# RABAT 105 NA JABŁKA -0,55
+# PODSUMA 15,95
+# RAZEM DO OBNIŻKA ŚWIĄTECZNA 16,50
+# RABAT OBNIŻKA ŚWIĄTECZNA -1,65
+# RAZEM DO PROM. 3 WCENIE 2 6,00
+# RABAT PROM. 3 WCENIE 2 -2,00
+# Sp.op.A 4,50 PTU A=22,00% 0,81
+# Sp.op.B 4,50 PTU B= 7,00% 0,29
+# Sp.op.C 3,40 PTU C= 0,00% 0,00
+#
+# Razem PTU 1,10
+# SUMA PLN 12,30
+# ZAPŁACONO GOTÓWKĄ PLN 12,30
+# 0036/0041 0130 SZEF 9:48
+#
+# PL BAQ 00000000
+# '''))
+#

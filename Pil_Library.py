@@ -5,7 +5,7 @@ im  =Image.open()
 print(im.size)
 print(im.format_description)
 print(path)
-def resize_image(input_path= path, output_path ="Paragons/paragon8.jpg", max_width =1200,max_height= 900):
+def Resize_image(input_path= path, output_path ="Paragons/paragon8.jpg", max_width =1200,max_height= 900):
     # open the image file
     with Image.open(input_path) as img:
         # chage color from rgba to rgb , rgba not available to this format
@@ -16,7 +16,7 @@ def resize_image(input_path= path, output_path ="Paragons/paragon8.jpg", max_wid
         resized_img = img.resize(new_size)
         resized_img.save(output_path)
 
-resize_image()
+Resize_image()
 
 
 
