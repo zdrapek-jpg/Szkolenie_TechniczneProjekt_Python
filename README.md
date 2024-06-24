@@ -5,6 +5,7 @@ projekt obejmuje  biblioteki tkinter, ttkbootstrap, tesseract,Pillow, cv2,matplo
 versions:
 
 AnacodnaNavigator version: 2.4.0   <br />
+Python version: 3.10.11 <br/>
 TensorFlow version: 2.16.1   <br />
 Tkinter version: 8.6   <br />
 Tesseract version: 5.3.1.20230401   <br />
