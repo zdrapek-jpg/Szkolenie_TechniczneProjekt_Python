@@ -1,12 +1,14 @@
 import sys
+
 import ttkbootstrap as ttk
-from Menu_Class import  Menu
+
+from Menu_Class import Menu
+
 from Functions import display_screen_size
+x,y,w,h = display_screen_size()
 
 window  = ttk.Window(themename="vapor")
 window.title("Projekt w Pythonie")
-from Functions import display_screen_size
-x,y,w,h = display_screen_size()
 
 
 window.geometry(f"{x}x{y}+{w}-{h}")
