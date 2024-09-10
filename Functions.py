@@ -56,27 +56,51 @@ def regex_for_mail(mail :str) -> bool:
     pattern =r'^[a-zA-Z0-9_+=&*%$#@!]{4,}@[A-Za-z0-9]+\.[a-zA-Z0-9]{2,}$'
     return re.match(pattern, mail) is  not None
 
-def dict_from_text(pattern: str )-> set:
-    return {char for char in pattern.lower().split()}
 
-def vectorization(dict1:dict,dict2:dict )->tuple:
+import math
+
+# Function to create a dictionary from the text
+def dict_from_text(pattern: str) -> dict:
+    dictionary = {}
+    for char in pattern.lower():
+        if char in dictionary:
+            dictionary[char] += 1
+        else:
+            dictionary[char] = 1
+    if ' ' in dictionary:
+        del dictionary[' ']
+    return dictionary
+print(dict_from_text("PTU B"))
+print(dict_from_text("SUMA PTU"))
+print(dict_from_text("SUMA PLN"))
+print(dict_from_text("SPRZEDAŻ OPODATKOWANA A"))
+print(dict_from_text("Sprzed. opod PTU A"))
+# Function to create vectors from two dictionaries
+def vectorization(dict1: dict, dict2: dict) -> tuple:
     all_keys = set(dict1.keys()).union(set(dict2.keys()))
     vector1 = [dict1.get(key, 0) for key in all_keys]
     vector2 = [dict2.get(key, 0) for key in all_keys]
     return vector1, vector2
-def similarity_between_2_texts(word1,word2)->float:
-    None
-def cos_similarity(x, y):
-    """ return cosine similarity between two lists """
-
-    numerator = sum(a * b for a, b in zip(x, y))
-    #denominator = squared_sum(x) * squared_sum(y)
-    #return round(numerator / float(denominator), 3)
 
 
-#cos_similarity("Ilovehorrormovies","Lightsoutisahorrormovie")
+# Function to calculate cosine similarity between two vectors
+def cos_similarity(vectors: tuple) -> float:
+    vector1, vector2 = vectors
 
-#print(similarity_between_2_texts("Ilovehorrormovies","Lightsoutisahorrormovie"))
+    # Calculate dot product
+    dot_product = sum(v1 * v2 for v1, v2 in zip(vector1, vector2))
+
+    # Calculate magnitudes
+    magnitude1 = math.sqrt(sum(v1 ** 2 for v1 in vector1))
+    magnitude2 = math.sqrt(sum(v2 ** 2 for v2 in vector2))
+
+    # Avoid division by zero
+    if magnitude1 == 0 or magnitude2 == 0:
+        return 0.0
+
+    # Calculate and return cosine similarity
+    return dot_product / (magnitude1 * magnitude2)
+
 
 
 # Assercje sprawdzające czy wszystkie pliki potrzebne znajdują się w danej lokalizacji

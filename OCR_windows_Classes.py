@@ -4,6 +4,7 @@ import imutils
 import numpy as np
 import pytesseract
 from imutils.contours import  sort_contours
+from paragons_preprocessing import *
 from Frame_Class import Frame_Ocr
 from tkinter import ttk
 import cv2
@@ -167,6 +168,9 @@ class OCR_pytesseract(tk.Toplevel):
                 cv2.cvtColor(output, cv2.COLOR_BGR2GRAY),
                 config="--oem 3 --psm 4 -l pol")
             pyperclip.copy(text_from_pytesseract)
-            print(text_from_pytesseract)
+            text = paragon_transoformations.split_paragon(text_from_pytesseract)
+            print(paragon_transoformations.patterns_finding(text))
+
+
         except:
             self.Main.set_error_message("pytesseract not found or not configured","red")
