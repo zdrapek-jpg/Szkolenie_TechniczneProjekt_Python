@@ -20,16 +20,15 @@ główne cele :
 - użycie modelu z pytesseract
 - przetwarzania obrazów przy użyciu gui
 - dodatek wizulany  dla tkinter ttkbootstrap
-- funkcje compile eval i exec w połączenie z matplotlib rysowanie wykresu i wyszukiwaniem miejsc zerowych 
+- funkcje compile eval i exec w połączenie z matplotlib rysowanie wykresu i wyszukiwaniem miejsc zerowych za pompcą sympy 
 - wysyłanie skopiowanego wcześniej wyniku ocr z pytesseract  jako wiadomość email ze schowka za pomocą pyperclip
 - obsługa wyjątków użycia bibliotek, wczytywania obrazów i walidacji 
-- tesseract dla odczytywania paragonów podział na   szczegułowe informacje z prostych paragonów
+- tesseract dla odczytywania paragonów podział na   szczegułowe informacje z prostych paragonów przy pomocy wyrażeń regularnych oraz metody cosinus similarity 
 
 
 
 ## Twórcy Projektu:
   -Paweł Skrok <br />
-  -Karolina Rydzik 
 
 
 
