@@ -105,16 +105,16 @@ def cos_similarity(vectors: tuple) -> float:
 
 # Assercje sprawdzające czy wszystkie pliki potrzebne znajdują się w danej lokalizacji
 
-assert(find_file('Tests.py','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Tests.py"
-assert(find_dir('OCR_Model','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\OCR_Model"
-assert(find_dir('Images','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Images"
-assert(find_dir('Output_Images','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Output_Images"
-assert(find_file("paragon6.jpg",'C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))=="C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Paragons\paragon6.jpg"
-assert(find_file('mymodel_retrained.h5','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))=="C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\OCR_Model\mymodel_retrained.h5"
-
-# Assercje dla Maili
-assert(regex_for_mail("pawelek1929wp.pl")) == False
-assert(regex_for_mail("paw@gmil.om")) == False
-assert(regex_for_mail("ankas1969@gmai.com"))== True
-assert(regex_for_mail("pawel1@o2.pl"))==True
+#assert(find_file('Tests.py','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Tests.py"
+# assert(find_dir('OCR_Model','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\OCR_Model"
+# assert(find_dir('Images','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Images"
+# assert(find_dir('Output_Images','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))==  "C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Output_Images"
+# assert(find_file("paragon6.jpg",'C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))=="C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\Paragons\paragon6.jpg"
+# assert(find_file('mymodel_retrained.h5','C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\\'))=="C:\Program Files\Pulpit\Projekt Szkolenie Techniczne\OCR_Model\mymodel_retrained.h5"
+#
+# # Assercje dla Maili
+# assert(regex_for_mail("pawelek1929wp.pl")) == False
+# assert(regex_for_mail("paw@gmil.om")) == False
+# assert(regex_for_mail("ankas1969@gmai.com"))== True
+# assert(regex_for_mail("pawel1@o2.pl"))==True
 

@@ -74,7 +74,12 @@ class paragon_transoformations:
         kod_pocztowy = [poczta_line  for poczta_line  in  owner if re.search(r"\d{2}-\d{3} .*$",poczta_line)]
         # others contins suma ptu, suma price and tail of recipe
         other_items = text
+        print(kod_pocztowy)
+        print(owner)
+        print(products)
+        print(other_items)
         return owner,kod_pocztowy,products,other_items
+
 
 # usage demands text file or string to process
 print(paragon_transoformations.patterns_finding(paragon_transoformations.split_paragon("sdd")))

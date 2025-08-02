@@ -33,6 +33,9 @@ class ImageEditor(tk.Toplevel):
         self.frame.pack(padx=10, pady=10)
         self.frame.columnconfigure((0, 1), uniform='a', weight=1)
         self.frame.rowconfigure((0, 1, 2), uniform='a', weight=1)
+        #   0,0    0,1
+        #   1,0    1,1
+        #   2,0    2,1
 
         # x axis scales and entries
         ttk.Label(self.frame, text="X: Begin - End").grid(column=0, row=0)
